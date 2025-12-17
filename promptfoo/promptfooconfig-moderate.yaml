@@ -1,0 +1,21 @@
+# Promptfoo Moderate Configuration for U-Ask AI Validation
+# Level 2: Moderate Setup (TC-AI-005 to TC-AI-007)
+
+description: "U-Ask UAE Government Chatbot - Moderate AI Validation"
+
+providers:
+  - file://providers/uask-chatbot-provider.js
+
+prompts:
+  - "{{question}}"
+
+tests: file://tests/2_moderate/moderate_test.yaml
+
+outputPath: ./output/moderate-results.json
+
+timeout: 180000
+
+defaultTest:
+  options:
+    provider:
+      timeout: 60000

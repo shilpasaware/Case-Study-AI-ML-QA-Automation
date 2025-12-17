@@ -1,0 +1,12 @@
+[pytest]
+markers =
+    hallucination: Tests for hallucination detection
+    relevancy: Tests for answer relevancy
+    faithfulness: Tests for response faithfulness
+    bias: Tests for bias detection
+    toxicity: Tests for toxicity
+    custom: Custom G-Eval metrics
+testpaths = ai-evaluation
+python_files = *tests.py
+python_classes = Test*
+python_functions = test_*

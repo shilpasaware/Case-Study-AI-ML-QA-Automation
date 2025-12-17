@@ -1,0 +1,37 @@
+deepeval==0.21.73
+pytest==8.0.0
+pytest-html==4.1.1
+openai==1.12.0
+anthropic==0.18.0
+python-dotenv==1.0.1
+
+
+
+u-ask-chatbot-automation-integrated/
+├── 📂 pages/                          # ← SHARED by all
+│   ├── BasePage.js
+│   └── ChatbotPage.js                 # Used by Playwright & Promptfoo
+│
+├── 📂 tests/                          # Your existing tests
+│   ├── ui-behavior.spec.js            (8 tests)
+│   ├── ai-response-validation.spec.js (10 tests)
+│   ├── security-injection.spec.js     (5 tests)
+│   └── cross-browser-mobile.spec.js   (4 tests)
+│
+├── 📂 promptfoo/                      # ← NEW: Integrated!
+│   ├── promptfooconfig.yaml
+│   ├── promptfooconfig-moderate.yaml
+│   ├── promptfooconfig-advanced.yaml
+│   ├── providers/
+│   │   └── uask-chatbot-provider.js   # Uses ChatbotPage
+│   ├── prompts/
+│   │   ├── empathetic_assistant.txt
+│   │   └── non_empathetic_assistant.txt
+│   ├── tests/                         # 10 AI test cases
+│   │   ├── 1_basic/basic_test.yaml
+│   │   ├── 2_moderate/moderate_test.yaml
+│   │   └── 3_advanced/advanced_test.yaml
+│   └── docs/                          # Complete tutorials
+│       ├── STEP_BY_STEP_GUIDE.md
+│       ├── ASSERTIONS_GUIDE.md
+│       └── CI_CD_INTEGRATION.md

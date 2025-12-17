@@ -1,0 +1,116 @@
+# Basic AI Validation Tests
+# PASS only when real answer is ready (not loading, not failure)
+
+- description: "TC-AI-001: Response about UAE driving license renewal"
+  vars:
+    question: "What is the process to renew my UAE driving license?"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+
+        // Only fail on actual system error outputs (NOT normal word "error" inside advice)
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+
+        // Fail on typical app failure/retry messages
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+
+        const hasContent = text.length > 150;
+        const isRelevant = /license|renew|driving|uae|emirates|rta/i.test(text);
+
+        return notPlaceholder && notSystemError && notFailureMsg && hasContent && isRelevant;
+        
+
+- description: "TC-AI-002: Response about UAE government departments"
+  vars:
+    question: "How many government departments are in the UAE?"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+        const notRefusal = !/i can\'t|i cannot|don\'t have access|as an ai/i.test(lower);
+
+        const hasContent = text.length > 80;
+
+        const hasNumberOrReasonable =
+          /\b\d+\b/.test(text) ||
+          /depends|varies|no single|not fixed|different|hard to say/i.test(lower);
+
+        return notPlaceholder &&
+               notSystemError &&
+               notFailureMsg &&
+               notRefusal &&
+               hasContent &&
+               hasNumberOrReasonable;
+
+
+- description: "TC-AI-003: Response about visa renewal documents"
+  vars:
+    question: "What documents do I need for visa renewal?"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+
+        const hasContent = text.length > 120;
+
+        const docHits = [
+          /passport/i.test(text),
+          /emirates id|emirates\s*id/i.test(text),
+          /photo|photograph/i.test(text),
+          /application|form/i.test(text),
+          /medical|insurance/i.test(text)
+        ].filter(Boolean).length;
+
+        const isRelevant = /visa|renew|residen|sponsor|passport|emirates/i.test(lower);
+
+        return notPlaceholder &&
+               notSystemError &&
+               notFailureMsg &&
+               hasContent &&
+               isRelevant &&
+               docHits >= 2;
+
+
+- description: "TC-AI-004: Response about business registration in Dubai"
+  vars:
+    question: "List the steps to register a business in Dubai"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+
+        const hasContent = text.length > 180;
+
+        const isRelevant = /business|register|dubai|trade license|licen[cs]e|ded|free zone|mainland/i.test(lower);
+
+        const looksLikeSteps =
+          /step[-\s]?by[-\s]?step/i.test(lower) ||
+          /steps?/i.test(lower) ||
+          /^\s*\d+\.\s+/m.test(text) ||
+          /^\s*[-•]\s+/m.test(text);
+
+        return notPlaceholder &&
+               notSystemError &&
+               notFailureMsg &&
+               hasContent &&
+               isRelevant &&
+               looksLikeSteps;

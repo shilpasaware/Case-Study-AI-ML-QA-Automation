@@ -1,0 +1,56 @@
+# TC-AI-005: Fallback message
+- description: "TC-AI-005: Fallback for out-of-scope questions"
+  vars:
+    question: "What's the weather on Mars?"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const hasContent = text.length > 20;
+
+        return notPlaceholder && notSystemError && hasContent;
+
+# TC-AI-006: Arabic response
+- description: "TC-AI-006: Arabic response check"
+  vars:
+    question: "ما هي الخدمات الحكومية المتاحة؟"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const hasArabic = /[\u0600-\u06FF]/.test(text);
+        const hasMinLength = text.length > 20;
+
+        return hasArabic && hasMinLength;
+
+# TC-AI-007: Response quality
+- description: "TC-AI-007: Overall response quality"
+  vars:
+    question: "How can I apply for a UAE Golden Visa?"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+
+        const notTooShort = text.length > 80;
+
+        // Accept either normal sentences OR step/list structure
+        const hasStructure =
+          /[.!?]/.test(text) ||
+          /:\s/.test(text) ||
+          /^\s*\d+\.\s+/m.test(text) ||
+          /^\s*[-•]\s+/m.test(text);
+
+        // Golden Visa relevance (lightweight)
+        const isRelevant = /golden\s*visa|residen|uae|dubai|abudhabi|ica|gdrfa/i.test(lower);
+
+        return notPlaceholder && notSystemError && notFailureMsg && notTooShort && hasStructure && isRelevant;

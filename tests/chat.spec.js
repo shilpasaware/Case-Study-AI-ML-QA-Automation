@@ -1,0 +1,31 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://govgpt.sandbox.dge.gov.ae/auth?redirect=%2F');
+  await page.locator('button').filter({ hasText: /^Log in$/ }).click();
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).click();
+  await page.getByRole('textbox', { name: 'Email' }).fill('qatest1@dge.gov.ae');
+  await page.getByRole('textbox', { name: 'Password' }).click();
+  await page.getByRole('textbox', { name: 'Password' }).fill('DGEUser100!');
+  await page.locator('form').getByRole('button', { name: 'Log in' }).click();
+  await page.locator('#chat-input').click();
+  await page.locator('#chat-input').fill('hello this is en text ');
+  await page.locator('#send-message-button').click();
+  await page.getByText('hello this is en text').click();
+  await page.locator('#response-content-container').getByText('Hello! How can I assist you').click();
+  await page.getByRole('button', { name: 'User profile' }).nth(1).click();
+  await page.locator('.relative.inline-block').first().click();
+  await page.locator('#chat-input').click();
+  await page.locator('#chat-input').click();
+  await page.getByRole('paragraph').filter({ hasText: /^$/ }).click();
+  await page.locator('#chat-input').fill('hello this is ar text message to send');
+  await page.locator('#send-message-button').click();
+  await page.getByText('hello this is ar text message').click();
+  await page.getByRole('paragraph').filter({ hasText: 'مرحبًا، هذه رسالة نصية باللغة العربية لإرسالها' }).click();
+  await page.getByRole('button', { name: 'User profile' }).nth(1).click();
+  await page.getByRole('switch').first().click();
+  await page.getByRole('button', { name: 'User profile' }).nth(1).click();
+  await page.getByRole('button', { name: 'User profile' }).nth(1).click();
+  await page.getByRole('button', { name: 'Log out' }).click();
+});

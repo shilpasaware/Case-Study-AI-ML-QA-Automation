@@ -1,0 +1,65 @@
+{
+  "simple_queries": [
+    {
+      "id": "simple_001",
+      "query": "What are the government services?",
+      "expectedKeywords": ["service", "government", "UAE"],
+      "category": "general"
+    },
+    {
+      "id": "simple_002",
+      "query": "Hello",
+      "expectedKeywords": ["help", "assist"],
+      "category": "greeting"
+    },
+    {
+      "id": "simple_003",
+      "query": "Tell me about Dubai",
+      "expectedKeywords": ["Dubai", "emirate"],
+      "category": "general"
+    }
+  ],
+  "service_queries": [
+    {
+      "id": "service_001",
+      "query": "How do I renew my Emirates ID?",
+      "expectedKeywords": ["Emirates ID", "renew"],
+      "category": "emirates_id"
+    },
+    {
+      "id": "service_002",
+      "query": "What is the process for passport renewal?",
+      "expectedKeywords": ["passport", "renew"],
+      "category": "passport"
+    },
+    {
+      "id": "service_003",
+      "query": "How to apply for a residence visa?",
+      "expectedKeywords": ["visa", "residence"],
+      "category": "visa"
+    }
+  ],
+  "smoke_test": [
+    {
+      "id": "smoke_001",
+      "query": "How can you help me?",
+      "category": "smoke"
+    }
+  ],
+  "multiple_messages": [
+    {
+      "messages": [
+        "Hello",
+        "I need help",
+        "How do I renew Emirates ID?",
+        "What documents needed?",
+        "How much does it cost?",
+        "Where to apply?",
+        "Can I do it online?",
+        "How long does it take?",
+        "Thank you",
+        "Goodbye"
+      ]
+    }
+  ]
+}

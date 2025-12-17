@@ -1,0 +1,67 @@
+name: CI - U-Ask Playwright + Promptfoo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+jobs:
+  promptfoo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      # Use repo secrets (Settings → Secrets and variables → Actions)
+      BASE_URL: ${{ secrets.BASE_URL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+
+      # Your provider reads HEADLESS from env. Keep true for CI.
+      HEADLESS: "true"
+      DEBUG_MODE: "false"
+
+      # Default timeout if provider/test uses it
+      TEST_TIMEOUT: "180000"
+
+      # Optional: only if any tests/providers require OpenAI/DeepEval later
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      DEEPEVAL_API_KEY: ${{ secrets.DEEPEVAL_API_KEY }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # Run Promptfoo suites one by one (stable)
+      - name: Run Promptfoo - Basic
+        run: npx promptfoo eval -c promptfoo/promptfooconfig.yaml --max-concurrency 1 --delay 500
+
+      - name: Run Promptfoo - Moderate
+        run: npx promptfoo eval -c promptfoo/promptfooconfig-moderate.yaml --max-concurrency 1 --delay 500
+
+      - name: Run Promptfoo - Advanced
+        run: npx promptfoo eval -c promptfoo/promptfooconfig-advanced.yaml --max-concurrency 1 --delay 500
+
+      # Optional: if you add negative tests config
+      # - name: Run Promptfoo - Negative / Hallucination
+      #   run: npx promptfoo eval -c promptfoo/promptfooconfig-negative.yaml --max-concurrency 1 --delay 500
+
+      - name: Upload Promptfoo outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: promptfoo-results
+          path: output/

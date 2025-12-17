@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+.env.local
+
+# Test results and reports
+reports/
+allure-results/
+allure-report/
+promptfoo/output/
+test-results/
+playwright-report/
+screenshots/
+videos/
+*.json
+!package.json
+!test-data/*.json
+
+# Playwright
+.playwright/
+playwright/.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Promptfoo
+.promptfoo/
+promptfoo-cache/
+
+# Temporary files
+*.tmp
+.cache/
+
+node_modules
+.env
+output
+playwright-report
+test-results
+.DS_Store

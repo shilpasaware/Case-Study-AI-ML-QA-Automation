@@ -1,0 +1,19 @@
+# Promptfoo Advanced Configuration for U-Ask AI Validation
+# Level 3: Advanced Setup (TC-AI-008 to TC-AI-010)
+
+description: "U-Ask UAE Government Chatbot - Advanced AI Validation"
+
+providers:
+  - file://providers/uask-chatbot-provider.js
+
+prompts:
+  - "{{question}}"
+
+tests: file://tests/3_advanced/advanced_test.yaml
+
+outputPath: ./output/advanced-results.json
+
+defaultTest:
+  options:
+    provider:
+      timeout: 180000

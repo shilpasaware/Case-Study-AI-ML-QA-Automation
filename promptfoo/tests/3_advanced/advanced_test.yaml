@@ -1,0 +1,91 @@
+# Advanced AI Validation Tests
+# PASS only when real answer is ready, complete, and relevant
+
+- description: "TC-AI-008: New resident onboarding checklist"
+  vars:
+    question: "I just moved to Dubai, what should I do first?"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+
+        const hasContent = text.length > 180;
+
+        const isRelevant = /dubai|uae|emirates id|residen|visa|bank|sim|ejari|tenancy|dld|rta/i.test(lower);
+
+        const hasStructure =
+          /[.!?]/.test(text) ||
+          /:\s/.test(text) ||
+          /^\s*\d+\.\s+/m.test(text) ||
+          /^\s*[-•]\s+/m.test(text);
+
+        return notPlaceholder && notSystemError && notFailureMsg && hasContent && isRelevant && hasStructure;
+
+- description: "TC-AI-009: Trade license documents"
+  vars:
+    question: "What documents do I need for trade license?"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+
+        const hasContent = text.length > 140;
+
+        const isRelevant = /trade license|licen[cs]e|business|company|ded|mainland|free zone|mof|moe|documents/i.test(lower);
+
+        const docHits = [
+          /passport/i.test(lower),
+          /emirates\s*id/i.test(lower),
+          /visa/i.test(lower),
+          /photo|photograph/i.test(lower),
+          /application|form/i.test(lower),
+          /tenancy|ejari|lease/i.test(lower),
+          /noc/i.test(lower),
+          /moa|memorandum/i.test(lower)
+        ].filter(Boolean).length;
+
+        const hasStructure =
+          /[.!?]/.test(text) ||
+          /:\s/.test(text) ||
+          /^\s*\d+\.\s+/m.test(text) ||
+          /^\s*[-•]\s+/m.test(text);
+
+        return notPlaceholder && notSystemError && notFailureMsg && hasContent && isRelevant && docHits >= 2 && hasStructure;
+
+- description: "TC-AI-010: Multi-topic guidance (visa + school + insurance)"
+  vars:
+    question: "I'm a British citizen married to an Emirati, we have 2 children, and I want to know about residence visa, school enrollment, and health insurance"
+  assert:
+    - type: javascript
+      value: |
+        const text = (output || '').trim();
+        const lower = text.toLowerCase();
+
+        const notPlaceholder = !/working on it|please wait|loading|one moment|typing|processing/i.test(lower);
+        const notSystemError = !/^(error:|exception:)/i.test(text);
+        const notFailureMsg = !/something went wrong|try again|unable to|timed out|timeout/i.test(lower);
+
+        const hasContent = text.length > 220;
+
+        // Must cover all 3 areas
+        const hasVisa = /visa|residen|gdrfa|ica|entry permit|emirates id|family visa|sponsor/i.test(lower);
+        const hasSchool = /school|enrol|enroll|admission|khda|moe|ministry of education|nursery/i.test(lower);
+        const hasInsurance = /insurance|health|dha|seha|policy|coverage|premium/i.test(lower);
+
+        const hasStructure =
+          /[.!?]/.test(text) ||
+          /:\s/.test(text) ||
+          /^\s*\d+\.\s+/m.test(text) ||
+          /^\s*[-•]\s+/m.test(text);
+
+        return notPlaceholder && notSystemError && notFailureMsg && hasContent && hasStructure && hasVisa && hasSchool && hasInsurance;

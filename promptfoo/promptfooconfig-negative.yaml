@@ -1,0 +1,16 @@
+description: "U-Ask UAE Government Chatbot - Negative / Hallucination Stress"
+
+providers:
+  - file://providers/uask-chatbot-provider.js
+
+prompts:
+  - "{{question}}"
+
+tests: file://tests/4_negative/negative_hallucination_test.yaml
+
+outputPath: ./output/negative-results.json
+
+defaultTest:
+  options:
+    provider:
+      timeout: 180000

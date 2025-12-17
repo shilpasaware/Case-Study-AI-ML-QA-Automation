@@ -1,0 +1,27 @@
+{
+  "arabic_queries": [
+    {
+      "id": "arabic_001",
+      "query": "ما هي الخدمات الحكومية؟",
+      "translation": "What are the government services?",
+      "expectedKeywords": ["خدمات", "حكومة"],
+      "category": "general",
+      "textDirection": "rtl"
+    },
+    {
+      "id": "arabic_002",
+      "query": "مرحبا",
+      "translation": "Hello",
+      "category": "greeting",
+      "textDirection": "rtl"
+    },
+    {
+      "id": "arabic_003",
+      "query": "كيف يمكنني تجديد الهوية الإماراتية؟",
+      "translation": "How can I renew my Emirates ID?",
+      "expectedKeywords": ["الهوية", "تجديد"],
+      "category": "emirates_id",
+      "textDirection": "rtl"
+    }
+  ]
+}

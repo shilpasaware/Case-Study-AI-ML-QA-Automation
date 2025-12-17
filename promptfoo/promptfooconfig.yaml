@@ -1,0 +1,23 @@
+description: "U-Ask UAE Government Chatbot - Basic AI Validation"
+
+providers:
+  - file://providers/uask-chatbot-provider.js
+
+prompts:
+  - "{{question}}"
+
+tests: file://tests/1_basic/basic_test.yaml
+
+outputPath: ./output/basic-results.json
+
+# ✅ Applies to every test case
+defaultTest:
+  options:
+    provider:
+      timeout: 180000   # 3 minutes (chatbot can be slow)
+
+# ✅ Controls evaluation behavior (concurrency, delays)
+evaluateOptions:
+  maxConcurrency: 1
+  delay: 500
+  timeoutMs: 180000
