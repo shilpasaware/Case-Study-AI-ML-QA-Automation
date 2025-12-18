@@ -164,12 +164,12 @@ test.describe('Security & Injection Tests', () => {
 
         await expect(chatbotPage.messageInput).toBeVisible();
 
-        console.log(`   ✅ Special characters handled safely`);
+        console.log(`   Special characters handled safely`);
       });
     }
 
     console.log('\n' + '='.repeat(80));
-    console.log('✅ Special Characters Test Verified');
+    console.log(' Special Characters Test Verified');
     console.log('='.repeat(80));
   });
 
@@ -189,10 +189,10 @@ test.describe('Security & Injection Tests', () => {
     expect(response).toBeTruthy();
     expect(response.length).toBeGreaterThan(0);
 
-    console.log('   ✅ Chat fully functional after all security tests');
+    console.log(' Chat fully functional after all security tests');
 
     console.log('\n' + '='.repeat(80));
-    console.log('✅ ALL SECURITY TESTS PASSED - APP IS SECURE');
+    console.log('ALL SECURITY TESTS PASSED - APP IS SECURE');
     console.log('='.repeat(80) + '\n');
   });
 });

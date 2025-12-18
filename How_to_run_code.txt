@@ -1,0 +1,136 @@
+▶️ How to Run the Automation Framework (Step-by-Step)
+
+This project contains two independent automation layers:
+
+Playwright UI Automation – validates chatbot UI behavior & security
+
+Promptfoo AI Validation – validates AI response quality & reliability
+
+You can run either one independently or both together.
+
+1️⃣ Prerequisites
+
+Make sure the following are installed on your system:
+
+node --version     # v18 or higher
+npm --version
+
+
+2️⃣ Project Setup
+Step 1: Clone the repository
+git clone https://github.com/shilpasaware/Case-Study-AI-ML-QA-Automation.git
+cd u-ask-automation
+
+Step 2: Install dependencies
+npm install
+
+Step 3: Install Playwright browsers
+npx playwright install
+
+3️⃣ Environment Configuration
+
+Create a .env file in the project root (this file is not committed):
+
+BASE_URL=https://ask.u.ae
+
+
+ℹ️ This allows easy environment switching without changing code.
+
+4️⃣ Run Playwright UI Automation
+Run all UI tests
+npm test
+
+Run only UI behavior tests
+npm run test:ui
+
+Run security / injection tests
+npm run test:security
+
+Run tests in headed (visible) mode
+npm run test:headed
+
+View Playwright HTML report
+npm run report
+
+
+📍 Report location:
+
+playwright-report/index.html
+
+5️⃣ Run Promptfoo AI Validation Tests
+
+Promptfoo tests validate AI response quality, not UI behavior.
+
+Run Basic AI tests
+npm run promptfoo:basic
+
+Run Moderate AI tests
+npm run promptfoo:moderate
+
+Run Advanced AI tests
+npm run promptfoo:advanced
+
+Run Negative / Hallucination tests
+npm run promptfoo:negative
+
+Run all AI tests together
+npm run promptfoo:all
+
+6️⃣ View Promptfoo Results
+Open Promptfoo local viewer
+npm run promptfoo:view
+
+
+📍 Results are also saved under:
+
+output/
+
+
+Each run generates a JSON report with:
+
+Pass / Fail status
+
+Assertion reasons
+
+Latency & stability data
+
+7️⃣ What Each Test Level Validates
+🟢 Basic
+
+Government service questions
+
+Step-by-step answers
+
+No loading / placeholder text
+
+Clear and relevant responses
+
+🟡 Moderate
+
+Arabic responses
+
+Fallback handling
+
+Non-refusal behavior
+
+General response quality
+
+🔵 Advanced
+
+Complex multi-topic questions
+
+Real user scenarios (new resident, trade license, etc.)
+
+Long, structured responses
+
+Contextual completeness
+
+🔴 Negative
+
+Prompt injection attempts
+
+Garbage / misleading inputs
+
+System error protection
+
+Hallucination-like behavior (heuristic)
