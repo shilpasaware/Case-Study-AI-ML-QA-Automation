@@ -190,10 +190,6 @@ Concurrency = 1
 
 Prevents UI session instability
 
-✔ Honest QA Scope
-
-Tests behavior & quality, not “perfect answers”
-
 ⚠️ Intentionally Not Covered
 Area	Reason
 Factual truth verification	Requires external knowledge base
@@ -218,15 +214,54 @@ Complex Queries → ✅ Covered
 
 CI-Ready → ✅ Included
 
+
+📄 Key Files
+Page Objects (2)
+
+pages/BasePage.js - Base page with common methods
+pages/ChatbotPage.js - Chatbot-specific page object
+
+Playwright Tests (4)
+
+tests/ui-behavior.spec.js - UI interaction tests
+tests/chat.spec.js - Chat functionality tests
+tests/ai-response-validation.spec.js - AI validation tests
+tests/security-injection.spec.js - Security tests
+
+Promptfoo AI Tests (3)
+
+promptfoo/tests/1_basic/basic_test.yaml - 4 basic tests
+promptfoo/tests/2_moderate/moderate_test.yaml - 7 moderate tests
+promptfoo/tests/3_advanced/advanced_test.yaml - 10 advanced tests
+
+Test Data (5)
+
+test-data/credentials.json - Login credentials
+test-data/prompts-en.json - English prompts
+test-data/prompts-ar.json - Arabic prompts
+test-data/injection-tests.json - Security payloads
+test-data/test-queries-full.json - Full test queries
+
+Utilities (5)
+
+utils/aiValidator.js - AI validation utilities
+utils/config-loader.js - Configuration loader
+utils/data-processor.js - Data processor
+utils/logger.js - Logger utility
+utils/testHelpers.js - Test helpers
+
+📊 Statistics
+📦 Project Metrics
+ ┣ 📁 Directories: 9
+ ┣ 📄 Source Files: 23
+ ┣ 🧪 UI Tests: 27
+ ┣ 🤖 AI Tests: 21
+ ┗ ✅ Total Tests: 48
+
+
 👩‍💻 Author
 
 Shilpa Saware
 Senior QA Engineer
-
-
-✅ Assessment Status
-
-✔ Completed
-✔ Production-oriented
 
 
